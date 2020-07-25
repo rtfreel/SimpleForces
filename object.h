@@ -19,14 +19,17 @@ public:
 	//apply force to the object
 	void applyForce(Vector2D force);
 
-	//increases object's parameters
+	//increase object's parameters
 	virtual void increase();
 
-	//updates object state
+	//update object state
 	virtual void update();
 
-	//draws object
+	//draw object
 	virtual void draw(SDL_Renderer* renderer, bool info = false);
+
+	//check if point is within the object
+	virtual bool isWithin(Vector2D point);
 
 	//object's velocity, acceleration and position in space
 	Vector2D vel, acc, pos;

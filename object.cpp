@@ -20,10 +20,15 @@ void Object::randomize() {
 }
 
 void Object::applyForce(Vector2D force) {
+	force.div(mass);
 	this->acc.add(force);
 }
 void Object::increase() {
-	mass *= defaults::SCALE;
+	this->mass += globals::INCREASE;
+}
+
+bool Object::isWithin(Vector2D point) {
+	return false;
 }
 
 void Object::update() {

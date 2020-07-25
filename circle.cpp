@@ -5,8 +5,15 @@ Circle::Circle() {}
 Circle::Circle(float x, float y, float mass) : Object(x, y, mass), radius(mass * 2) {}
 
 void Circle::increase() {
-	this->mass *= 1.1f;
-	this->radius = 2 * this->mass;
+	this->mass += globals::INCREASE;
+	this->radius = this->mass;
+}
+
+bool Circle::isWithin(Vector2D point) {
+    if (Vector2D::connect(this->pos, point).mag() <= radius) {
+        return true;
+    }
+    return false;
 }
 
 void Circle::update() {

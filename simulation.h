@@ -13,10 +13,10 @@ public:
 	void start();
 
 	//update scene
-	void update();
+	virtual void update();
 
 	//draw objects
-	void draw();
+	virtual void draw();
 
 	//clear render
 	void clear();
@@ -25,9 +25,9 @@ public:
 	void render();
 
 	//main loop
-	void loop();
+	virtual void loop();
 
-private:
+protected:
 	//true, if simulation is running at the moment
 	bool _running = false;
 	SDL_Window* _window;

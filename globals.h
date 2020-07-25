@@ -8,22 +8,20 @@ namespace globals {
 	//window size
 	const int WIDTH = 1600;
 	const int HEIGHT = 800;
+	const float INCREASE = 0.02;
 }
 
 namespace defaults {
 	//max default speed and mass
 	const float MAX_VEL = 0.1;
 	const float MAX_ACC = 0.2;
-	const float MAX_MASS = 100;
-
-	//scale multipier for increasing objects
-	const float SCALE = 1.1f;
+	const float MAX_MASS = 50;
 
 	//multiplier for velocity to show it
 	const float SHOW_VEL = 10;
 
 	//gravity constant
-	const float G_CONST = 0;
+	const float G_CONST = 0.3;
 }
 
 struct Vector2D {
@@ -56,6 +54,12 @@ struct Vector2D {
 	void mult(Vector2D vector) {
 		x *= vector.x;
 		y *= vector.y;
+	}
+
+	//divide vector by a vector
+	void div(float scalar) {
+		x /= scalar;
+		y /= scalar;
 	}
 
 	//add vector to vector
