@@ -24,7 +24,7 @@ void Object::applyForce(Vector2D force) {
 	this->acc.add(force);
 }
 void Object::increase() {
-	mass *= defaults::SCALE;
+	this->mass += globals::INCREASE;
 }
 
 bool Object::isWithin(Vector2D point) {

@@ -14,10 +14,13 @@ public:
 
 	void loop();
 
-	void addCircle();
+	void createCircle();
+
+	void increase();
 
 	Circle selected;
 	std::vector<Circle> circles;
+	float G = defaults::G_CONST;
 };
 
 #endif

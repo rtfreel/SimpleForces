@@ -1,23 +1,72 @@
 #include "gravity_simulation.h"
 #include "circle.h"
+#include "input.h"
 
 GravitySimulation::GravitySimulation() {}
 
 void GravitySimulation::loop() {
 	SDL_Event event;
+	Input input;
 
 	while (true) {
+		input.beginNewFrame();
+
 		if (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT) {
-				SDL_Quit();
-				break;
+			if (event.type == SDL_KEYDOWN) {
+				input.keyDownEvent(event);
+			}
+			else if (event.type == SDL_KEYUP) {
+				input.keyUpEvent(event);
 			}
 			if (event.type == SDL_MOUSEBUTTONDOWN) {
-				this->addCircle();
+				input.mouseDownEvent(event);
 			}
+			if (event.type == SDL_MOUSEBUTTONUP) {
+				input.mouseUpEvent(event);
+			}
+			if (event.type == SDL_QUIT) {
+				SDL_Quit();
+				return;
+			}
+		}
+		if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE)) {
+			SDL_Quit();
+			return;
+		}
+		if (input.wasKeyPressed(SDL_SCANCODE_Q) || input.isKeyHeld(SDL_SCANCODE_Q)) {
+			this->G -= 0.02;
+		}
+		if (input.wasKeyPressed(SDL_SCANCODE_E) || input.isKeyHeld(SDL_SCANCODE_E)) {
+			this->G += 0.02;
+		}
+		if (input.wasKeyPressed(SDL_SCANCODE_R)) {
+			this->G = defaults::G_CONST;
+		}
+		if (input.wasMousePressed()) {
+			this->createCircle();
+		}else if (input.isMouseHeld()) {
+			this->increase();
+		}
+		if (input.wasMouseReleased()) {
+			this->circles.push_back(selected);
+			this->selected = Circle();
 		}
 		this->update();
 		this->draw();
+	}
+}
+
+void GravitySimulation::createCircle() {
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	this->selected = Circle(x, y);
+}
+
+void GravitySimulation::increase() {
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	if (selected.isWithin(Vector2D(x, y))) {
+		selected.increase();
 	}
 }
 
@@ -28,21 +77,11 @@ void GravitySimulation::update() {
 			if (i == j)
 				continue;
 			Vector2D force = Vector2D::connect(this->circles.at(i).pos, this->circles.at(j).pos);
-			float forceMag = defaults::G_CONST * (this->circles.at(i).mass * this->circles.at(j).mass) / (force.mag() * force.mag());
+			float forceMag = this->G * (this->circles.at(i).mass * this->circles.at(j).mass) / (force.mag() * force.mag());
 			force.setMag(forceMag);
 			this->circles.at(i).applyForce(force);
 		}
 	}
-}
-
-void GravitySimulation::addCircle() {
-	this->selected = Circle();
-	this->selected.mass = 1;
-	int x, y;
-	SDL_GetMouseState(&x, &y);
-	this->selected.pos.x = (float)x;
-	this->selected.pos.y = (float)y;
-	this->circles.push_back(selected);
 }
 
 void GravitySimulation::draw() {

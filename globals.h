@@ -8,6 +8,7 @@ namespace globals {
 	//window size
 	const int WIDTH = 1600;
 	const int HEIGHT = 800;
+	const float INCREASE = 0.02;
 }
 
 namespace defaults {
@@ -15,9 +16,6 @@ namespace defaults {
 	const float MAX_VEL = 0.1;
 	const float MAX_ACC = 0.2;
 	const float MAX_MASS = 50;
-
-	//scale multipier for increasing objects
-	const float SCALE = 1.1f;
 
 	//multiplier for velocity to show it
 	const float SHOW_VEL = 10;
