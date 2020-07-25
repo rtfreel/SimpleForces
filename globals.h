@@ -19,6 +19,12 @@ struct Vector2D {
 	Vector2D() : x(0), y(0) {}
 	Vector2D(float x, float y) : x(x), y(y) {}
 
+	//create vector from two points
+	static Vector2D connect(Vector2D startPoint, Vector2D endPoint) {
+		return Vector2D(endPoint.x - startPoint.x,
+			endPoint.y - startPoint.y);
+	}
+
 	//multiply vector by a scalar
 	void mult(float scalar) {
 		x *= scalar;
