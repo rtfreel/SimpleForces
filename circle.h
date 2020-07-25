@@ -13,7 +13,10 @@ public:
 	Circle(float x, float y, float mass = 1.0f);
 
 	//increases parameters of the circle
-	void increase();
+	virtual void increase();
+
+	//check if point is within the object
+	virtual bool isWithin(Vector2D point);
 
 	//updates object state
 	virtual void update();

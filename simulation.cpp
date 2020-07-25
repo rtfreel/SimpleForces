@@ -29,6 +29,8 @@ void Simulation::render() {
 	SDL_RenderPresent(this->_renderer);
 }
 
+void Simulation::update() {}
+
 void Simulation::draw() {}
 
 void Simulation::loop() {

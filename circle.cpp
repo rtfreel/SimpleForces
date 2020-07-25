@@ -9,6 +9,13 @@ void Circle::increase() {
 	this->radius = 2 * this->mass;
 }
 
+bool Circle::isWithin(Vector2D point) {
+    if (Vector2D::connect(this->pos, point).mag() <= radius) {
+        return true;
+    }
+    return false;
+}
+
 void Circle::update() {
     if (radius == 0) {
         radius = mass * 2;
