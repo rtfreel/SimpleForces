@@ -4,6 +4,44 @@ Circle::Circle() {}
 
 Circle::Circle(float x, float y, float mass) : Object(x, y, mass), radius(mass * 2) {}
 
+void Circle::collide(Circle* circle) {
+
+    //new velocities directions calculation:
+    //
+    //calculations for this circle
+    //vector from center to collision point
+    Vector2D toCol = Vector2D::connect(this->pos, circle->pos);
+    toCol.setMag(this->radius);
+    //magnitude of projection of velocity on the vector from center to collisison
+    float projectionMag = ((this->vel.x * toCol.x) + (this->vel.y * toCol.y)) / toCol.mag();
+    toCol.setMag(projectionMag);
+    //vector directed as new circle's velocity
+    Vector2D newThisVel = Vector2D(this->vel.x - (2 * toCol.x), this->vel.y - (2 * toCol.y));
+    //
+    //calculations for another circle
+    //vector from center to collision point
+    toCol = Vector2D::connect(circle->pos, this->pos);
+    toCol.setMag(circle->radius);
+    //magnitude of projection of velocity on the vector from center to collisison
+    projectionMag = ((circle->vel.x * toCol.x) + (circle->vel.y * toCol.y)) / toCol.mag();
+    toCol.setMag(projectionMag);
+    //vector directed as new circle's velocity
+    Vector2D newCircleVel = Vector2D(circle->vel.x - (2 * toCol.x), circle->vel.y - (2 * toCol.y));
+
+    //new velocities magnitudes calculation (based on conservation of energy and momentum):
+    //
+    //calculations for another circle
+    float newCircleVelMag = ((2 * this->mass * this->vel.mag()) + ((circle->mass - this->mass) * circle->vel.mag())) / (this->mass + circle->mass);
+    newCircleVel.setMag(newCircleVelMag);
+    //calculations for this circle
+    float newThisVelMag = newCircleVelMag + this->vel.mag() - circle->vel.mag();
+    newThisVel.setMag(newThisVelMag);
+
+    //applying new velosities:
+    this->vel = newThisVel;
+    circle->vel = newCircleVel;
+}
+
 void Circle::increase() {
 	this->mass += globals::INCREASE;
 	this->radius = this->mass;

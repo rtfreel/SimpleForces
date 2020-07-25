@@ -12,7 +12,10 @@ public:
 	//create circle in particular location
 	Circle(float x, float y, float mass = 1.0f);
 
-	//increases parameters of the circle
+	//change velocity due to collision
+	void collide(Circle* circle);
+
+	//increase parameters of the circle
 	virtual void increase();
 
 	//check if point is within the object

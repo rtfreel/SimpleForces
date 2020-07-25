@@ -71,12 +71,26 @@ void GravitySimulation::increase() {
 }
 
 void GravitySimulation::update() {
+	std::vector<Vector2D> collided;
 	for (int i = 0; i < circles.size(); i++) {
 		this->circles.at(i).update();
 		for (int j = 0; j < circles.size(); j++) {
 			if (i == j)
 				continue;
 			Vector2D force = Vector2D::connect(this->circles.at(i).pos, this->circles.at(j).pos);
+			if (force.mag() < this->circles.at(i).radius + this->circles.at(j).radius) {
+				bool colident = true;
+				for (Vector2D col : collided) {
+					if ((col.x == i && col.y == j) || (col.x == j && col.y == i)) {
+						colident = false;
+						break;
+					}
+				}
+				if (colident) {
+					this->circles.at(i).collide(&this->circles.at(j));
+					collided.push_back(Vector2D(i, j));
+				}
+			}
 			float forceMag = this->G * (this->circles.at(i).mass * this->circles.at(j).mass) / (force.mag() * force.mag());
 			force.setMag(forceMag);
 			this->circles.at(i).applyForce(force);
