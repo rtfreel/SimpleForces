@@ -12,9 +12,15 @@ namespace globals {
 
 namespace defaults {
 	//max default speed and mass
-	const float MAX_VEL = 0.02;
-	const float MAX_ACC = 0.01;
-	const float MAX_MASS = 50;
+	const float MAX_VEL = 0.1;
+	const float MAX_ACC = 0.2;
+	const float MAX_MASS = 100;
+
+	//scale multipier for increasing objects
+	const float SCALE = 1.1f;
+
+	//multiplier for velocity to show it
+	const float SHOW_VEL = 10;
 
 	//gravity constant
 	const float G_CONST = 0;
@@ -36,7 +42,7 @@ struct Vector2D {
 		//random vector, where: 0 <= (x & y) <= 1
 		Vector2D vector = Vector2D((float)rand() / (float)RAND_MAX, (float)rand() / (float)RAND_MAX);
 		//set random magnitude between 0 and mag
-		vector.setMag((mag * 2 * (float)rand() / (float)RAND_MAX) - mag);
+		vector.setMag((mag * 2 * ((float)rand() / (float)RAND_MAX)) - mag);
 		return vector;
 	}
 

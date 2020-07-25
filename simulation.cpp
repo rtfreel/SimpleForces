@@ -1,6 +1,6 @@
 #include "simulation.h"
 #include "globals.h"
-#include "object.h"
+#include "circle.h"
 #include <SDL.h>
 #include <iostream>
 
@@ -36,7 +36,6 @@ void Simulation::loop() {
 
 	Object object = Object();
 	object.randomize();
-	object.pos = Vector2D(globals::WIDTH / 2, globals::HEIGHT / 2);
 	Vector2D force = Vector2D::random(defaults::MAX_ACC);
 
 	while (true) {

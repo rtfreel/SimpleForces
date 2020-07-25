@@ -19,11 +19,14 @@ public:
 	//apply force to the object
 	void applyForce(Vector2D force);
 
+	//increases object's parameters
+	virtual void increase();
+
 	//updates object state
-	void update();
+	virtual void update();
 
 	//draws object
-	void draw(SDL_Renderer* renderer, bool info = false);
+	virtual void draw(SDL_Renderer* renderer, bool info = false);
 
 	//object's velocity, acceleration and position in space
 	Vector2D vel, acc, pos;
