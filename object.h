@@ -2,6 +2,7 @@
 #define OBJECT_H
 
 #include "globals.h"
+#include <SDL.h>
 
 class Object {
 public:
@@ -9,9 +10,12 @@ public:
 	//create empty object
 	Object();
 
-	//create new object with given mass
-	Object(float mass = 1.0f);
+	//create new object with given coordinates and mass
+	Object(float x, float y, float mass = 1.0f);
 	
+	//set random parameters
+	void randomize();
+
 	//apply force to the object
 	void applyForce(Vector2D force);
 
@@ -19,9 +23,10 @@ public:
 	void update();
 
 	//draws object
-	void draw();
+	void draw(SDL_Renderer* renderer, bool info = false);
 
-	Vector2D vel, acc;
+	//object's velocity, acceleration and position in space
+	Vector2D vel, acc, pos;
 	float mass;
 };
 

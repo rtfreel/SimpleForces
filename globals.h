@@ -2,6 +2,7 @@
 #define GLOBALS_H
 
 #include <math.h>
+#include <random>
 
 namespace globals {
 	//window size
@@ -10,8 +11,13 @@ namespace globals {
 }
 
 namespace defaults {
+	//max default speed and mass
+	const float MAX_VEL = 0.02;
+	const float MAX_ACC = 0.01;
+	const float MAX_MASS = 50;
+
 	//gravity constant
-	const float g_const = 0;
+	const float G_CONST = 0;
 }
 
 struct Vector2D {
@@ -23,6 +29,15 @@ struct Vector2D {
 	static Vector2D connect(Vector2D startPoint, Vector2D endPoint) {
 		return Vector2D(endPoint.x - startPoint.x,
 			endPoint.y - startPoint.y);
+	}
+
+	//create random vector within given magnitude
+	static Vector2D random(float mag = 1.0f) {
+		//random vector, where: 0 <= (x & y) <= 1
+		Vector2D vector = Vector2D((float)rand() / (float)RAND_MAX, (float)rand() / (float)RAND_MAX);
+		//set random magnitude between 0 and mag
+		vector.setMag((mag * 2 * (float)rand() / (float)RAND_MAX) - mag);
+		return vector;
 	}
 
 	//multiply vector by a scalar
