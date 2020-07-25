@@ -1,6 +1,8 @@
 #include "simulation.h"
 #include "globals.h"
+#include "circle.h"
 #include <SDL.h>
+#include <iostream>
 
 Simulation::Simulation() {
 	//init everything from SDL
@@ -17,6 +19,9 @@ void Simulation::start() {
 }
 
 void Simulation::clear() {
+	//set background color
+	SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 0);
+
 	SDL_RenderClear(this->_renderer);
 }
 
@@ -28,14 +33,24 @@ void Simulation::draw() {}
 
 void Simulation::loop() {
 	SDL_Event event;
+
+	Object object = Object();
+	object.randomize();
+	Vector2D force = Vector2D::random(defaults::MAX_ACC);
+
 	while (true) {
 		if (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT) {
 				SDL_Quit();
 				break;
 			}
+			if (event.type == SDL_MOUSEBUTTONDOWN) {
+				object.applyForce(force);
+			}
 		}
+		object.update();
 		this->clear();
+		object.draw(this->_renderer);
 		this->render();
 	}
 }
