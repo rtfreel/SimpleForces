@@ -21,6 +21,8 @@ public:
 	Circle selected;
 	std::vector<Circle> circles;
 	float G = defaults::G_CONST;
+
+	int frame;
 };
 
 #endif

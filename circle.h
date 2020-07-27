@@ -27,7 +27,7 @@ public:
 	//draws object
 	virtual void draw(SDL_Renderer* renderer, bool info = false);
 
-	float radius = 0;
+	float radius = 0.0f;
 };
 
 #endif

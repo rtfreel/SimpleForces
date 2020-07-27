@@ -8,20 +8,21 @@ namespace globals {
 	//window size
 	const int WIDTH = 1600;
 	const int HEIGHT = 800;
-	const float INCREASE = 0.02;
+	const float INCREASE = 0.5f;
+	const int UPDATES_PER_FRAME = 500;
 }
 
 namespace defaults {
 	//max default speed and mass
-	const float MAX_VEL = 0.1;
-	const float MAX_ACC = 0.2;
+	const float MAX_VEL = 0.1f;
+	const float MAX_ACC = 0.2f;
 	const float MAX_MASS = 50;
 
 	//multiplier for velocity to show it
 	const float SHOW_VEL = 10;
 
 	//gravity constant
-	const float G_CONST = 0.3;
+	const float G_CONST = 0.3f;
 }
 
 struct Vector2D {

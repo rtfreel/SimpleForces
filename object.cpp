@@ -21,6 +21,7 @@ void Object::randomize() {
 
 void Object::applyForce(Vector2D force) {
 	force.div(mass);
+	force.div(pow(globals::UPDATES_PER_FRAME, 2));
 	this->acc.add(force);
 }
 void Object::increase() {

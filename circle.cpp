@@ -31,7 +31,7 @@ void Circle::collide(Circle* circle) {
     //new velocities magnitudes calculation (based on conservation of energy and momentum):
     //
     //calculations for another circle
-    float newCircleVelMag = ((2 * this->mass * this->vel.mag()) + ((circle->mass - this->mass) * circle->vel.mag())) / (this->mass + circle->mass);
+    float newCircleVelMag = ((2 * this->mass * this->vel.mag()) + (abs(circle->mass - this->mass) * circle->vel.mag())) / (this->mass + circle->mass);
     newCircleVel.setMag(newCircleVelMag);
     //calculations for this circle
     float newThisVelMag = newCircleVelMag + this->vel.mag() - circle->vel.mag();
@@ -40,11 +40,14 @@ void Circle::collide(Circle* circle) {
     //applying new velosities:
     this->vel = newThisVel;
     circle->vel = newCircleVel;
+
+    printf("First:\t x = %f,\t y = %f,\t mag = %f;\n", this->vel.x, this->vel.y, this->vel.mag());
+    printf("Second:\t x = %f,\t y = %f,\t mag = %f;\n", circle->vel.x, circle->vel.y, circle->vel.mag());
 }
 
 void Circle::increase() {
 	this->mass += globals::INCREASE;
-	this->radius = this->mass;
+	this->radius = pow(this->mass, 0.5f);
 }
 
 bool Circle::isWithin(Vector2D point) {
@@ -56,7 +59,7 @@ bool Circle::isWithin(Vector2D point) {
 
 void Circle::update() {
     if (radius == 0) {
-        radius = mass * 2;
+        radius = pow(this->mass, 0.5f);
     }
 	Object::update();
 }
